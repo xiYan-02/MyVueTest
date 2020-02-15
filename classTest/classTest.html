@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="classTest.css">
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <h1>动态绑定样式 两种方式</h1>
+    <div id="app-box">
+        <h2>方式1 属性绑定</h2>
+        <span class="btn" :class="{btnClick:isClick1}" @click="spanClick1">click</span>
+        <h2>方式2 计算属性绑定</h2>
+        <span class="btn" :class="computedClass" @click="spanClick2">click</span>
+    </div>
+</body>
+<script src="calssTest.js"></script>
+
+</html>

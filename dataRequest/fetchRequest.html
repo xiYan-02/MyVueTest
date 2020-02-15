@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <h1>使用ES6 fetch和Axios进行网络请求</h1>
+    <div id="vue-app">
+        <h2>GET请求</h2>
+        <ul>
+            <li v-for="v in todos">{{ v }}</li>
+        </ul>
+        <h2>POST请求</h2>
+        <form>
+            <input type="text" v-model="todo.title">
+            <input type="checkbox" v-model="todo.completed">
+            <input type="submit" value="提交" @click.prevent="submit">
+        </form>
+
+        <p>{{ postRes }}</p>
+
+    </div>
+</body>
+<script src="fetchRequest.js"></script>
+
+</html>

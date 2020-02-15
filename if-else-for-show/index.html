@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="../result.css">
+</head>
+
+<body>
+    <h1>if-else-for-show</h1>
+    <div id="app-box">
+
+        <h2>if-else</h2>
+
+        <p v-if="success">data - 1</p>
+        <p v-else-if="error">data - 2</p>
+        <p v-else>data - 3</p>
+
+        <hr />
+
+        <h2>v-show</h2>
+
+        <p v-show="success">data - 4</p>
+        <p v-show="error">data - 5</p>
+
+        <h1>if-else与v-show总结</h1>
+        <ul class="result">
+            <li>1、if-else与v-show都是根据boolean改变元素的显示状态</li>
+            <li>2、if-else是改变css的display属性，而v-show是直接改变的DOM</li>
+        </ul>
+
+        <h2>v-for遍历数组、数组对象</h2>
+
+        <h3>遍历出数组元素</h3>
+        <ul>
+            <li v-for="myName in names">{{ myName }}</li>
+        </ul>
+
+        <h3>遍历出数组元素和索引</h3>
+        <ul>
+            <li v-for="(myName,index) in names">index - {{ index }} -- value - {{ myName }}</li>
+        </ul>
+
+        <h3>遍历出数组的索引和对象中的元素&使用v-for遍历对象</h3>
+        <ul>
+            <li v-for="(myUser,index) in users">
+                <!-- key在后，val在前 -->
+                <span v-for="(val,key) in myUser">{{ key }} - {{ val }} -- </span>
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="sc.js"></script>
+
+</html>

@@ -1,0 +1,17 @@
+.btn{
+    width: 70px;
+    height: 30px;
+    background-color: green;
+    margin: 20px;
+    text-align: center;
+    line-height: 30px;
+    display: block;
+}
+.btnClick{
+    background-color: red;
+}
+.change{
+    width: 90px;
+    height: 40px;
+    line-height: 40px;
+}

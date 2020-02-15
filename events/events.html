@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="events.css">
+</head>
+
+<body>
+    <div id="vue-app">
+        <!-- test:v-on绑定单击事件，简写@ -->
+        <button @click="addAge(1)">add one age</button>
+        <button v-on:click="jianAge(1)">jian one age</button>
+        <!-- test:v-on绑定双击事件，简写@ -->
+        <button @dblclick.once="addAge(10)">add ten age</button>
+        <button v-on:dblclick="jianAge(10)">jian ten age</button>
+
+        <p>我的年龄是：{{ age }}</p>
+
+        <!-- test:v-on绑定鼠标移动事件，若不需要传参则不要写参数，因为那边要用到事件参数 -->
+        <div @mousemove="updateTxt" id="testMouse">
+            {{x}},{{y}}
+        </div>
+
+        <!-- 事件修饰符 -->
+        <!-- 
+            .stop - 调用 event.stopPropagation()，取消事件冒泡。
+            .prevent - 调用 event.preventDefault()，阻止默认事件。
+            .capture - 添加事件侦听器时使用 capture 模式。
+            .self - 只当事件是从侦听器绑定的元素本身触发时才触发回调。
+            .{keyCode | keyAlias} - 只当事件是从特定键触发时才触发回调。
+            .native - 监听组件根元素的原生事件。
+            .once - 只触发一次回调，即触发一次事件。
+            .left - (2.2.0) 只当点击鼠标左键时触发。
+            .right - (2.2.0) 只当点击鼠标右键时触发。
+            .middle - (2.2.0) 只当点击鼠标中键时触发。
+            .passive - (2.3.0) 以 { passive: true } 模式添加侦听器
+         -->
+
+        <!-- test:v-on绑定键盘按下事件，用 修饰符 来判断按下的键 -->
+        <p>
+            <span>姓名(按Enter键结束)：</span><input type="text" v-on:keydown.enter="logName" />
+            <span>年龄(按Enter+Alt键结束)：</span><input type="text" @keydown.enter.alt="logAge" />
+        </p>
+
+        <!-- test:v-model 实现双向数据绑定(输入输出) -->
+        <h2>v-model双向绑定 input / select / textarea / components</h2>
+        <p>
+            <span>无修饰符：</span><input type="text" v-model="v1">
+            <span>{{ v1 }}</span><br />
+            <span>有修饰符(懒加载，去除空格，number类型)：</span><input type="number" v-model.trim.lazy.number="v2">
+            <span>{{ v2 }}</span>
+        </p>
+
+        <!-- v-model修饰符 -->
+        <!-- 
+            .lazy - 取代 input 监听 change 事件，实现懒加载，及不会实时更新，等输入框失去焦点后才加载
+            .number - 输入字符串转为有效的数字
+            .trim - 输入首尾空格过滤
+         -->
+
+        <h2>使用特殊特性ref实现获取节点</h2>
+        <!-- test:被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象上。
+            如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例 -->
+        <p>
+            <span>无修饰符：</span><input type="text" ref="v3" @keyup="testRef">
+            <span>{{ v3 }}</span><br />
+        </p>
+
+        <h2>使用watch监控data中值的变化</h2>
+        <!-- test:对性能的消耗较大，一般调试的时候使用 -->
+        <p>
+            <span>查看console：</span><input type="text" v-model="testWatch">
+        </p>
+
+        <h2>使用computed</h2>
+        <!-- test:
+            1、计算属性中的函数不能作为事件处理函数，因为是属性 所以不需要()
+            2、在data中的属性发生变化时会自动调用响应的方法，不会调用其他无关的方法 -->
+        <p>{{ computedTest }}</p>
+    </div>
+</body>
+<script src="events.js"></script>
+
+</html>

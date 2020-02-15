@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app-box">
+        <!-- 存放img -->
+        <div id="bag" :class="{zero: this.res}">
+
+        </div>
+
+        <!-- 血条 -->
+        <div id="xue">
+            <!-- 使用v-bind来绑定一个对象 -->
+            <div :style="{width: val + '%'}"></div>
+        </div>
+
+        <div id="btns">
+            <button @click="call" v-show="!this.res">call</button>
+            <button @click="reset">reset</button>
+        </div>
+    </div>
+</body>
+<script src="sc.js"></script>
+
+</html>

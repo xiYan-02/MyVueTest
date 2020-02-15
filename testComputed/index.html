@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="../result.css">
+</head>
+
+<body>
+    <h1>Computed和Methods中方法调用方式</h1>
+    <div id="app-box">
+        <button @click="addA">Add to A</button>
+        <button @click="addB">Add to B</button>
+        <h2>methods方法（查看log）</h2>
+        <p>A - {{ a }}</p>
+        <p>B - {{ b }}</p>
+        <p>Age + A - {{ aToAge() }}</p>
+        <p>Age + B - {{ bToAge() }}</p>
+        <p>{{ logAge() }}</p>
+        <hr />
+        <h2>computed方法（查看log）</h2>
+        <p>Age + A - {{ aToAgeC }}</p>
+        <p>Age + B - {{ bToAgeC }}</p>
+        <p>{{ logAgeC }}</p>
+    </div>
+    <h1>Methods和Computed总结</h1>
+    <ul class="result">
+        <li>1、调用：写在Methods中的方法当在DOM中通过{{ name() }}调用(除事件驱动函数)时，只要调用其中一个，其他在DOM中的元素都会调用</li>
+        <li> 2、在Computed中的方法是带缓存的，只有其引用的响应式属性发生改变时才会重新计算，所以是响应式的</li>
+        <li>3、Computed中的方法是作为属性引用的，每次使用时不需要加"()"，但Methods中的方法除事件驱动函数外都必须加"()"</li>
+    </ul>
+</body>
+<script src="sc.js"></script>
+
+</html>

@@ -1,0 +1,27 @@
+#bag{
+    margin: 0px auto;
+    height: 390px;
+    width: 150px;
+    background: url(img/start.png) center no-repeat;
+    background-size: 90%;
+}
+#bag.zero{
+    background: url(img/end.png) center no-repeat;
+    background-size: 90%;
+}
+#xue{
+    width: 200px;
+    border: 2px solid black;
+    margin: 20px auto 20px auto;
+}
+#xue > div{
+    height: 20px;
+    background-color: crimson;
+}
+#btns{
+    text-align: center;
+}
+#btns > button{
+    width: 100px;
+    height: 30px;
+}

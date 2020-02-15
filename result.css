@@ -1,0 +1,10 @@
+.result{
+    background-color: rgb(60,60,60);
+    padding: 15px;
+    border-left: 12px solid rgb(30,30,30);
+    list-style: none;
+    color: white;
+}
+.result > li{
+    padding-bottom: 7px;
+}

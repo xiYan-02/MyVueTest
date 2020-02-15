@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="app-box">
+
+        <!-- test:获取data里面的值 -->
+        我的名字是：{{name}},今年：{{age}}
+
+        <!-- test:调用methods里面的方法 -->
+        <p>{{ showTest(this.name,"night") }}</p>
+
+        <!-- test:使用v-html指令调用data里面的html，直接使用{{ key }}会被编译成字符串 -->
+        <p v-html="html"></p>
+
+        <!--
+        <span v-text="msg"></span>
+         和下面的一样 
+        <span>{{msg}}</span>
+    -->
+
+        <!-- test:使用v-bind指令调用data里面的值,简写 : -->
+        <p>
+            <a v-bind:href="baidu">baidu</a> <br />
+            <a :href="taobao">taobao</a>
+        </p>
+    </div>
+
+    <div id="app">
+        {{ message }}
+    </div>
+</body>
+<script src="base.js"></script>
+
+</html>
