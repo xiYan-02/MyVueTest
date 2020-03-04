@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <span>id:</span><input type="text" v-model="id">
+        <span>name:</span><input type="text" v-model="name">
+        <button @click="add">Add</button>
+        <button @click="del">Del</button>
+
+        <!-- 在vue2.2以上，在组件中使用for是必须要加 ：key的 -->
+        <!-- 默认是通过数组中的索引来区分的，假如你标记的索引是3，如果你在前面新增一个元素，那么你标记的索引就变成了原来的2 -->
+        <!-- 所以你要标记一个key来标记 -->
+        <p v-for="(item, index) in list">
+            <input type="checkbox" v-model="item.is_select">
+            {{item.id}} -- {{item.name}}
+        </p>
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                id: '',
+                name: '',
+                list: [{ id: 1, name: '李白', is_select: false },
+                { id: 2, name: '韩信', is_select: false },
+                { id: 3, name: '猴子', is_select: false },
+                { id: 4, name: '云中君', is_select: false },
+                { id: 5, name: '后裔', is_select: false },]
+            }
+        },
+        methods: {
+            add() {
+                this.list.unshift({ id: this.id, name: this.name, is_select: false });
+                this.id = this.name = "";
+            },
+            del() {
+                for (var i = 0; i < this.list.length; i++) {
+                    if (this.list[i].is_select) {
+                        this.list.splice(i, 1);
+                        // 这就很关键
+                        i--;
+                    }
+                }
+            }
+        },
+    })
+</script>
+
+</html>

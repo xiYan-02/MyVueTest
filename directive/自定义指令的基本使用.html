@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+
+    <!-- 在vue中，不建议直接操作DOM（就是不建议使用除Vue以外的方法操作DOM） -->
+    <div id="app">
+        <span v-color="'red'">ID:</span><input type="text" v-focus>
+    </div>
+
+
+    <script>
+
+        // 定义全局的自定义指令：在调用的时候要加前缀 v-
+        // 第一个参数：固定死了，所绑定的标签，是一个元素DOM对象
+        // 第二个：写在 =" " 中的值，是一个对象
+        Vue.directive('focus', {
+            // 指令第一次绑定到元素时调用。这个时候元素还没有插入到DOM中
+            // 一般用来设置样式【只调用一次】
+            bind(el) {
+
+            },
+            // 被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+            // 一般用来设置相关行为【只调用一次】
+            inserted(el) {
+                el.focus();
+            },
+            // 所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。
+            // 你可以通过比较更新前后的值来忽略不必要的模板更新
+            // 【可能调用多次】
+            updated(el) {
+
+            },
+        });
+
+        // 简写,你如果在后面直接写一个函数，则表示只使用bind和updated函数，但不能设置相关行为，如focus
+        Vue.directive('color', (el, binding) => {
+            el.style.color = binding.value;
+        })
+
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+</head>
+
+<body>
+
+    <div id="app">
+
+        <com-ping @parentadduser='adduser'></com-ping>
+
+        <ul class="list-group">
+            <li v-for="item in users" class="list-group-item">
+                {{item.com}}
+                <span class="badge">评论人：{{ item.name }}</span>
+                <span class="badge">时间：{{ item.time }}</span>
+
+            </li>
+        </ul>
+    </div>
+
+    <template id="com1">
+        <div>
+            <div class="form-group">
+                <label>评论人</label>
+                <input v-model="name" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <span>评论内容：</span>
+                <textarea v-model="com" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group"><button @click='addping' class="btn btn-primary">发表评论</button></div>
+        </div>
+    </template>
+
+    <script>
+
+        var ping = {
+            template: "#com1",
+            data() {
+                // 在Vue中，如果你在data中的一个属性是对象，那么对这个data的一系列操作是异步的
+                return {
+                    time: '',
+                    name: '',
+                    com: ''
+                }
+            },
+            methods: {
+                addping() {
+                    this.time = this.getNow();
+                    var user = { time: this.time, name: this.name, com: this.com }
+                    this.$emit('parentadduser', user);
+
+
+                    // 在Vue中，如果你在data中的一个属性是对象，那么对这个data的一系列操作是异步的
+
+                    this.name = '';
+                    this.com = '';
+                    alert('评论成功！');
+                },
+                getNow() {
+                    var time = new Date();
+                    var year = time.getFullYear();
+                    var mm = time.getMonth() + 1;
+                    var dd = time.getDay() + 1;
+                    var hh = time.getHours();
+                    var mi = time.getMinutes();
+                    var ss = time.getSeconds();
+                    return `${year}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+                }
+            }
+        }
+
+
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    users: []
+                }
+            },
+            mounted() {
+                this.users = JSON.parse(localStorage.getItem('com')) || [];
+            },
+            methods: {
+                getNow() {
+                    var time = new Date();
+                    var year = time.getFullYear();
+                    var mm = time.getMonth() + 1;
+                    var dd = time.getDay() + 1;
+                    var hh = time.getHours();
+                    var mi = time.getMinutes();
+                    var ss = time.getSeconds();
+                    return `${year}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+                },
+                adduser(user) {
+                    this.users.unshift(user);
+                    localStorage.setItem('com', JSON.stringify(this.users));
+                }
+            },
+            components: {
+                comPing: ping
+            }
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">添加商品</h2>
+            </div>
+            <div class="panel-body form-inline">
+                <span>ID：</span><input v-model="id" @keyup.enter='add' type="text" class="form-control">
+                <span>名称：</span><input type="text" @keyup.f2='add' v-model="name" class="form-control">
+                <button class="btn btn-primary" @click="add">添加</button>
+                <span>搜索名称关键字：</span><input type="text" v-focus="'red'" v-model="keyword" class="form-control">
+            </div>
+        </div>
+
+
+        <table class="table table-bordered table-hover table-striped">
+            <tr>
+                <td>ID</td>
+                <td>名称</td>
+                <td>添加时间</td>
+                <td>操作</td>
+            </tr>
+            <tr v-for="(item, index) in res(keyword)" :key="cars.id">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.time | dateFormat()}}</td>
+                <td><a @click.prevent="del" href="">删除</a></td>
+            </tr>
+        </table>
+
+    </div>
+
+
+    <script>
+
+        // 自定义键盘修饰符，通过keyCode值定义，也可以直接在后面写keyCode
+        Vue.config.keyCodes = {
+            // camelCase won`t work
+            f2: 113
+        };
+        // 开启devtools工具
+        Vue.config.devtools = true;
+
+        // 自定义全局过滤器，实现时间格式的转化
+        Vue.filter('dateFormat', function (data, arg = "") {
+            var date = new Date();
+            var y = date.getFullYear();
+            var m = (date.getMonth() + 1).toString().padStart(2, '0');
+            var d = date.getDate().toString().padStart(2, '0');
+            var ff = "";
+            ff.toLocaleLowerCase
+            if (arg.toLocaleLowerCase() === "yyyy-mm-dd") {
+                return `${y}-${m}-${d}`;
+            }
+            var h = date.getHours().toString().padStart(2, '0');
+            var mm = date.getMinutes().toString().padStart(2, '0');
+            var ss = date.getSeconds().toString().padStart(2, '0');
+            return `${y}-${m}-${d} ${h}:${mm}:${ss}`;
+        });
+
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    id: '',
+                    name: '',
+                    keyword: '',
+                    cars: [
+                        { id: 1, name: "宝马", time: new Date() },
+                        { id: 2, name: "奔驰", time: new Date() }
+                    ]
+                }
+            },
+            methods: {
+                add() {
+                    this.cars.push({ id: this.id, name: this.name, time: new Date() });
+                    this.id = '';
+                    this.name = '';
+                },
+                del(i) {
+                    this.cars.splice(i, 1);
+                },
+                res(key) {
+
+                    // var newArr = [];
+                    // this.cars.forEach(element => {
+                    //     if (element.name.indexOf(key) != -1) {
+                    //         newArr.push(element);
+                    //     }
+                    // });
+                    // // console.log(newArr)
+                    // return newArr;
+
+                    // 会将filter中返回的item自动组装成一个数组并返回
+                    return this.cars.filter(item => {
+                        if (item.name.includes(key)) {
+                            return item;
+                        }
+                    })
+
+                }
+            },
+            directives: {
+                focus: {
+                    bind() {
+                    },
+                    inserted(el) {
+                        el.focus();
+                    }
+                },
+                // focus(el, binding) {
+                //     el.focus();
+                //     el.style.color = binding.value;
+                // }
+            }
+        })
+    </script>
+</body>
+
+</html>

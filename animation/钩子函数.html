@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        .box {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="box">
+
+        <button @click="flag = !flag;">start</button><br />
+
+        <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter" @enter-cancelled="cancelled">
+            <!-- 当关联的bool值为true，就执行前半场的钩子函数
+                 当关联的bool值为false，就执行后半场的钩子函数
+            -->
+            <div v-show="flag" class="box"></div>
+        </transition>
+
+    </div>
+
+    <script src="demo.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+
+    <!-- filter 只能 在插值表达式和v-bind中使用 -->
+
+    <div id="app">
+
+        <!-- 在渲染msg时，先交给过滤器处理，然后在渲染 -->
+        <!-- 多个过滤器从左到右执行完然后再渲染 -->
+        <h2>{{ msg | change('疯狂') | append }}</h2>
+
+    </div>
+
+
+    <script>
+
+        // 定义全局过滤器：在所有vue实例中都可以使用
+        // 第一个参数：固定死了，就是|前面的那个值，后面的参数才是你传过来的参数
+        // 注意：过滤器名称要用字符串
+        Vue.filter('change', function (data, arg = '') {
+            // arg = '' :ES6新出的虚拟参数，如果在调用这个方法的时候没有传这个参数，则会引用虚拟参数
+            return data.replace(/纯洁/g, arg)
+        });
+
+        Vue.filter('append', data => {
+            return data + "牛逼";
+        });
+
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    msg: '曾经的我，是一个无比纯洁的人，纯洁的我傻傻的问，谁是这个世上最纯洁的人！'
+                }
+            },
+            methods: {
+
+            },
+            // 私有过滤器，只能在自己的vue实例中使用
+            // 当与全局过滤器重名时，优先使用自己的
+            filters: {
+                append(data) {
+                    return data + "垃圾"
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

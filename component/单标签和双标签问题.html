@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+
+    <div id="app-box">
+
+        <test3></test3>
+
+        <test4></test4>
+
+    </div>
+
+</body>
+<script>
+
+    Vue.component('test3', {
+        template: '<h3>This is test3</h3>'
+    })
+
+    Vue.component('test4', {
+        template: "<h3>This is test4</h3>"
+    });
+
+
+    new Vue({
+        el: "#app-box",
+        data() {
+            return {
+            }
+        }
+    });
+
+</script>
+
+</html>

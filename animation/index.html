@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <style>
+        /* v-enter[时间点]：定义元素开始前状态，在元素插入之前生效，在下一帧该类名将会被移除 */
+        /* v-leave-to[时间点]：定义元素结束的状态，在动画最后一帧生效，之后该类名会被移除 */
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px);
+        }
+
+        /* v-enter-action和v-leave-action都是表示时间段，在这里一般定义持续的时间
+            分别表示前半场和后半场持续的时间
+         */
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.8s ease;
+        }
+
+
+        /* 当关联的那个bool值为true则执行前半场，前半场只触发v-enter、v-enter-to，时间由v-enter-active决定 */
+        /* 当关联的那个bool值为true则执行后半场，后半场只触发v-enter、v-enter-to，时间由v-leave-active决定 */
+        /* 在执行完之后类名都会移除，即回到原始状态，那些类名仅在执行动画的过程中生效 */
+
+
+        .my-enter,
+        .my-leave-to {
+            opacity: 0;
+            transform: translateY(150px);
+        }
+
+        .my-enter-active,
+        .my-leave-active {
+            transition: all 0.8s ease;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="box">
+
+        <h2>基本使用</h2>
+
+        <button @click="test">Toggle-1</button>
+
+        <!-- 1、使用transition把需要被动画控制的元素包裹起来 -->
+        <!-- 2、用过类名控制动画的状态 -->
+
+        <transition>
+            <!-- 由v-if或v-show触发 -->
+            <h3 v-show="flag">Holle Word！</h3>
+        </transition>
+
+
+        <h2>使用name来区分不同组的动画</h2>
+        <button @click="flag1 = !flag1;">Toggle-1</button>
+        <transition name="my">
+            <h3 v-if="flag1">Hello Word！</h3>
+        </transition>
+
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- 生产环境版本，优化了尺寸和速度 -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<style>
+    .start {
+        margin: 0px auto;
+        width: 150px;
+        height: 390px;
+        background: url(img/start.png) center no-repeat;
+        background-size: 90% 90%;
+    }
+
+    .end {
+        background: url(img/end.png) center no-repeat;
+    }
+
+    .blood {
+        margin: 0px auto;
+        width: 200px;
+        height: 20px;
+        border: 1px solid black;
+    }
+
+    .blood>div {
+        height: 100%;
+        width: 100%;
+        background-color: red;
+    }
+
+    .btns {
+        text-align: center;
+    }
+</style>
+
+<body>
+
+    <div id="app">
+
+        <div class="start" :class="style">
+
+        </div>
+
+        <div class="blood">
+            <div :style="{width:this.val + '%'}"></div>
+        </div>
+
+        <div class="btns">
+            <button @click="call" v-show="this.flag">Call</button>
+            <button @click="reset">Reset</button>
+        </div>
+
+    </div>
+
+
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    val: 100,
+                    flag: true,
+                    style: 'start'
+                }
+            },
+            methods: {
+                call() {
+                    this.val -= 10;
+                    if (this.val == 0) {
+                        this.flag = false;
+                        this.style = 'end';
+                    }
+                },
+                reset() {
+                    this.val = 100;
+                    this.flag = true;
+                    this.style = 'start';
+                }
+            },
+        })
+    </script>
+
+</body>
+
+</html>

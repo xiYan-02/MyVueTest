@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        span {
+            cursor: pointer;
+        }
+
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.8s ease;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>使用v-if...-else或v-show替换</h1>
+        <span @click='flag = true;'>登录</span>
+        <span @click="flag = false;">注册</span>
+        <login v-show="flag"></login>
+
+        <register v-show="!flag"></register>
+
+
+        <h1>使用Vue提供的component组件(推荐)</h1>
+        <span @click='com = "login";'>登录</span>
+        <span @click="com = 'register'">注册</span>
+
+        <!-- 实现组件动画
+            mode:out-in：等上一个组件的动画效果执行完，下一个组件才开始执行动画
+        -->
+        <transition mode='out-in'>
+            <component :is="com"></component>
+        </transition>
+
+
+    </div>
+
+    <script>
+
+        Vue.component('login', {
+            template: '<h2>登录模块</h2>'
+        });
+
+        Vue.component('register', {
+            template: '<h2>注册模块</h2>'
+        });
+
+
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    flag: true,
+                    com: 'login'
+                }
+            },
+            methods: {
+
+            },
+        })
+    </script>
+
+</body>
+
+</html>

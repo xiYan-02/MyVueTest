@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="../result.css">
+</head>
+
+<body>
+    <h1>Vue.component全局组件的三种方式</h1>
+
+    <div id="app-box">
+
+        <!-- <test1 /> -->
+
+        <!-- <test2 /> -->
+
+        <div>
+
+            <test3 />
+        </div>
+
+        <div>
+
+            <test4 />
+        </div>
+
+        <!-- <my-test5></my-test5> -->
+
+    </div>
+
+    <!-- <template id="test4">
+        <div>
+            <h3>{{msg}}</h3>
+        </div>
+    </template> -->
+
+    <!-- 必须要在初始化vue的容器中使用，在外面使用是无效的 -->
+    <h2>注意事项</h2>
+    <ul class="result">
+        <li>1、必须要在初始化vue的容器中才能使用组件</li>
+        <li>2、一个全局组件 就是一个Vue实例 ，可以把template看做是el属性，所以也只能访问自己里面的data</li>
+        <li>3、如果是双标签可以存在于同一个根节点，如果是单标签，就不能共用一个根节点，不然只会显示一个组件，一般单标签用div包起来</li>
+        <li>4、全局组件可以在多个vue实例中使用</li>
+        <li>5、若给组件的命名中用到了大写，则要用小写代替，并且要加个 - </li>
+    </ul>
+    <test />
+</body>
+<script>
+
+    // 方式一：定义一个Vue.extend，然后在传递到vue.component中
+    // var tep = Vue.extend({
+    //     template: "<h3><<<<<<<<<<<<<<<<<这是使用第一种方式定义的全局组件</h3>"
+    // });
+    // Vue.component('test1', tep);
+
+    // 方式二：直接把Vue.extend传到Vue.component中
+    // Vue.component('test2', Vue.extend({
+    //     template: "<h3> >>>>>>>>>>>>>>>这是使用第二种 简单的 方式定义的全局组件</h3>"
+    // }));
+
+    // 方式三：省略Vue.extend
+    Vue.component('test3', {
+        template: '<h3><<<<<<<<<<<<<<<<<这是使用第三种 简洁又简单 方式定义的全局组件</h3>'
+    })
+
+    // 方式四：在方式三的基础上，在template中给一个id
+    // 然后在h5中定义一个template标签，
+    // 注意：：必须在vue容器的外边定义，id就是这个id
+    //         一个全局组件 就是一个Vue实例 ，可以把template看做是el属性,但data必须定义为方法的形式
+    Vue.component('test4', {
+        template: "<div><h3>{{this.msg}}</h3></div>"
+        , data() {
+            return {
+                msg: '>>>>>>>>>>>>>>>这是使用第四种 一般用的 方式定义的全局组件'
+            }
+        }
+    });
+
+
+    new Vue({
+        el: "#app-box",
+        data() {
+            return {
+                msg: '>>>>>>>>>>>>>>>这是使用第四种 一般用的 方式定义的全局组件'
+            }
+        },
+        components: {
+            myTest5: {
+                template: "<h2>这是 局部组件，只能给自己使用</h2>"
+            }
+        }
+    });
+
+</script>
+
+</html>

@@ -9,7 +9,8 @@ new Vue({
         v3: '',
         testWatch: '0'
     },
-    // methods中的 所有 方法在data中的值发生变化时都会调用一次，性能消耗较大
+    // methods中所有在h5中通过{{ }}的方式调用的方法在
+    // data中的值发生变化时都会调用一次，性能消耗较大
     methods: {
         addAge(num) {
             this.age += num;

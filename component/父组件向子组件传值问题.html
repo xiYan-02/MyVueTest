@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <com1 :parentdata="msg" @func="changeMsg"></com1>
+    </div>
+
+
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    msg: "这是你爸爸的data"
+                }
+            },
+            methods: {
+                changeMsg(v1, v2) {
+                    this.msg = v1 + v2;
+                    console.log("你调用了你爸爸的方法")
+                }
+            },
+            components: {
+                // 私有组件是无法 直接访问 父容器中的data和methods的，访问自己的是没毛病的
+                // 访问父容器data的方法，步骤
+                //      1、先在引用自定义的标签上自定义一个属性，然后通过v-bind绑定父容器data中的属性
+                //      2、在props中引用自定义的属性，然后就可以正常使用
+                // 
+                com1: {
+                    template: '<div></h2><h2 @click="func">{{parentdata}}</h2></div>',
+                    data() {
+                        return {
+                            msg: "这是我自己中的data"
+                        }
+                    },
+                    // 就只有props是数组
+                    // 子组件对父组件中data的值是只读的，如果修改父组件中的值会报错，要修改的话就要调用父组件中的方法来修改
+                    // 子组件对自己data中的值是可读可写的
+                    props: ['parentdata'],
+                    methods: {
+                        // 子组件调用父组件的方法
+                        // 步骤：
+                        //      1、先在引用自定义标签的地方自定义一个事件（事件不要有大写和 - ），然后通过v-on绑定
+                        //      2、在自己的方法中通过this.$emit触发
+                        func() {
+                            // 参数1：自定义事件名称
+                            // 参数2 ...：在父组件中的参数，有几个就写几个
+                            this.$emit('func', "myVue：", "我调用了父组件的方法改变了父组件的data")
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- 生产环境版本，优化了尺寸和速度 -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<style>
+    /* li的样式 */
+    .li-1 {
+        border: 1px black dashed;
+        list-style: none;
+        margin: 5px;
+        padding: 10px;
+        background-color: cornflowerblue;
+        font-size: 12px;
+        color: white;
+        width: 100%;
+    }
+
+    .li-1:hover {
+        background-color: steelblue;
+        transition: all 0.8s ease;
+    }
+
+    .v-enter,
+    .v-leave-to {
+        opacity: 0;
+        transform: translateY(70px);
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+        transition: all 0.6s ease;
+    }
+
+    /* v-move是transition-group特有的 */
+    /* v-move和v-leave-active联合使用，可以实现列表后续元素的过渡效果 */
+    .v-move {
+        transition: all 0.5s ease;
+    }
+
+    .v-leave-active {
+        position: absolute;
+    }
+</style>
+
+<body>
+
+    <div id="box">
+
+        <label>姓名：<input type="text" v-model="name"></label>
+        <label>年龄：<input type="text" v-model="age"></label><button @click="addUser">添加</button>
+
+
+        <!-- <ul> -->
+        <!-- 对于使用v-for渲染的标签要实现过渡动画的话不能用transition包裹，得用transition-group -->
+        <!-- transition-group会默认编译为span标签，可以使用tag指定想要编译成的标签 -->
+        <!-- :key="key.name，若不加key则 数据 无法显示出来 -->
+        <!-- appear：能够实现第一次加载页面时也出现动画效果 -->
+        <transition-group appear tag="ul">
+            <li class="li-1" v-for="(key,i) in arr" :key="key.name" @click="del(i)">
+                {{ key.name }} -- {{ key.age }}
+            </li>
+        </transition-group>
+        <!-- </ul> -->
+    </div>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data() {
+                return {
+                    name: '',
+                    age: '',
+                    arr: [{ name: "小王", age: 18 },
+                    { name: "小李", age: 19 },
+                    { name: "小陈", age: 20 },
+                    { name: "小刘", age: 21 },
+                    { name: "小贺", age: 22 },]
+                }
+            },
+            methods: {
+                addUser() {
+                    this.arr.push({ name: this.name, age: this.age });
+                },
+                del(i) {
+                    this.arr.splice(i, 1);
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

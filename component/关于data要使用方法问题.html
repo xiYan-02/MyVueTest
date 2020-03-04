@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <test></test>
+        <hr>
+        <test></test>
+        <hr>
+        <test></test>
+        <hr>
+    </div>
+
+    <script>
+
+        var obj = { count: 0 }
+
+        Vue.component('test', {
+            template: "<div><button @click='add'> + 1 </button><h2>{{ count }}</h2></button></div>",
+            data() {
+                // data定义为方法返回一个对象的原因：
+                // 1、当在h5中多次引用一个组件时，这时多个组件都是引用的一个data，所以当其中一个组件改变了data，那个其他组件中的data也会改变
+                // 解决方法就是返回一个各自独立的对象
+
+                // return obj;
+                return {
+                    count: 0
+                };
+            },
+            methods: {
+                add() {
+                    this.count++;
+                }
+            },
+        })
+
+        new Vue({
+            el: "#app"
+        })
+    </script>
+
+</body>
+
+</html>

@@ -8,24 +8,35 @@
     <!-- 生产环境版本，优化了尺寸和速度 -->
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- vue-resource依赖于vue，所以要先引用vue.js -->
+    <script src="../js/vue-resource 1.5.1.js"></script>
 </head>
 
 <body>
-    <h1>使用ES6 fetch和Axios进行网络请求</h1>
+    <h1>使用ES6 fetch和Axios和vue-resource进行网络请求</h1>
     <div id="vue-app">
         <h2>GET请求</h2>
         <ul>
-            <li v-for="v in todos">{{ v }}</li>
+            <li v-for="v in todos"><a :href="v.path" target="block">{{ v.title }}</a><br />
+                <img :src="v.image" />
+            </li>
         </ul>
         <h2>POST请求</h2>
-        <form>
-            <input type="text" v-model="todo.title">
+        <!-- <form>
+            <input type="text" v-model="todo.name">
             <input type="checkbox" v-model="todo.completed">
             <input type="submit" value="提交" @click.prevent="submit">
-        </form>
+        </form> -->
+        <button @click="submit">Post请求</button>
 
         <p>{{ postRes }}</p>
+        <h2>Vue-resource GET请求</h2>
+        <ul>
+            <li v-for="val in users">{{ val }}</li>
+        </ul>
 
+        <h2>Vue-resource POST请求</h2>
+        <button @click="vuePost">VuePost</button>
     </div>
 </body>
 <script src="fetchRequest.js"></script>

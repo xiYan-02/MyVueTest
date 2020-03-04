@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 标记了v-cloak指令的标签，在未编译完成时会应用该css */
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <p v-cloak>{{msg}}</p>
+        <button @click='test'>open</button>
+    </div>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <!-- 把网络调至3G，打开Display cache才可以看到
+        模拟在网络慢的时候看到{{}}插值表达式    
+    -->
+
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    msg: 'hello'
+                }
+            },
+            methods: {
+                test() {
+                    open('base.html', 'block')
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
